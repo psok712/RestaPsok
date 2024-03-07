@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequestMapping("/api/order")
-@Controller
+@RestController
 public class OrderPositionControllerImpl implements OrderPositionController {
 
     @Autowired

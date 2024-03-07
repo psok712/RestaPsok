@@ -1,7 +1,6 @@
 package com.example.restapsok.Controller.Interface;
 
 import com.example.restapsok.Model.OrderPosition;
-import com.example.restapsok.Model.StatusOrder;
 
 import java.util.List;
 

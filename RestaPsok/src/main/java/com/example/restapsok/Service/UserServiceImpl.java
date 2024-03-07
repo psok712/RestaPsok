@@ -23,6 +23,14 @@ public class UserServiceImpl implements UserService {
         return users.findAll();
     }
 
+    public User getUserById(Long id) {
+        if (users.findById(id).isEmpty()) {
+            return new User();
+        }
+
+        return users.findById(id).get();
+    }
+
     public User updateUser(Long id, User user) {
         if (users.findById(id).isEmpty()) {
             return new User();
@@ -39,14 +47,6 @@ public class UserServiceImpl implements UserService {
         return users.save(user);
     }
 
-    public User getUserById(Long id) {
-
-        if (users.findById(id).isEmpty()) {
-            return new User();
-        }
-
-        return users.findById(id).get();
-    }
 
     public String deleteUser(Long id) {
         if (users.findById(id).isEmpty()) {

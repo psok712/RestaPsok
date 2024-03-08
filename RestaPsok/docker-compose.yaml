@@ -10,20 +10,3 @@ services:
       POSTGRES_USER: psok
       POSTGRES_PASSWORD: 712
       POSTGRES_DB: psok
-  psok_app:
-    container_name: psok_app
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        DB_URL: ${DB_URL}
-        PG_USER: ${PG_USER}
-        PG_PASSWORD: ${PG_PASSWORD}
-    ports:
-      - 8080:8080
-    environment:
-      DB_URL: jdbc:postgresql://localhost:5432/psok
-      PG_USER: psok
-      PG_PASSWORD: 712
-    depends_on:
-      - psok_db

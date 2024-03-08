@@ -8,7 +8,7 @@ import lombok.Data;
 @Table(name="order_position")
 public class OrderPosition {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name="id_guest", updatable = false, nullable = false)

@@ -3,14 +3,13 @@ package com.example.restapsok.Model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.UUID;
 
 @Data
 @Entity
 @Table(name="users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long id;
 
     @Column(name="username", nullable = false)

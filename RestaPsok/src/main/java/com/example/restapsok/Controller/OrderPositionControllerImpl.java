@@ -6,7 +6,7 @@ import com.example.restapsok.Repository.OrderPositionRepository;
 import com.example.restapsok.Service.Interface.OrderPositionService;
 import com.example.restapsok.Service.OrderPositionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,31 +19,31 @@ public class OrderPositionControllerImpl implements OrderPositionController {
     private OrderPositionRepository orders;
 
     @GetMapping
-    public List<OrderPosition> getAllOrders() {
+    public ResponseEntity<List<OrderPosition>> getAllOrders() {
         OrderPositionService service = new OrderPositionServiceImpl(orders);
         return service.getAllOrders();
     }
 
     @GetMapping("/{id}")
-    public OrderPosition getOrderById(@PathVariable Long id) {
+    public ResponseEntity<OrderPosition> getOrderById(@PathVariable Long id) {
         OrderPositionService service = new OrderPositionServiceImpl(orders);
         return service.getOrderById(id);
     }
 
     @PostMapping
-    public OrderPosition createOrder(@RequestBody OrderPosition orderPosition) {
+    public ResponseEntity<OrderPosition> createOrder(@RequestBody OrderPosition orderPosition) {
         OrderPositionService service = new OrderPositionServiceImpl(orders);
         return service.createOrder(orderPosition);
     }
 
     @PutMapping("/cancel/{id}")
-    public String cancelOrder(@PathVariable Long id) {
+    public ResponseEntity<String> cancelOrder(@PathVariable Long id) {
         OrderPositionService service = new OrderPositionServiceImpl(orders);
         return service.cancelOrder(id);
     }
 
     @PutMapping("/pay/{id}")
-    public String payOrder(@PathVariable Long id) {
+    public ResponseEntity<String> payOrder(@PathVariable Long id) {
         OrderPositionService service = new OrderPositionServiceImpl(orders);
         return service.payOrder(id);
     }

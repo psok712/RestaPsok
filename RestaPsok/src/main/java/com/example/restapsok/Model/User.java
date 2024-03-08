@@ -10,12 +10,15 @@ import java.util.UUID;
 @Table(name="users")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
+
     @Column(name="username", nullable = false)
     public String username;
+
     @Column(name="password", nullable = false)
     public String password;
+
     @Column(name="role", nullable = false)
     public Role role = Role.GUEST;
 }

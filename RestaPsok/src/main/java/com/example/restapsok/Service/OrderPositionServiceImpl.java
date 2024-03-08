@@ -5,6 +5,8 @@ import com.example.restapsok.Model.StatusOrder;
 import com.example.restapsok.Repository.OrderPositionRepository;
 import com.example.restapsok.Service.Interface.OrderPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,46 +21,41 @@ public class OrderPositionServiceImpl implements OrderPositionService {
         orders = orderRepository;
     }
 
-    public List<OrderPosition> getAllOrders() {
-        return orders.findAll();
+    public ResponseEntity<List<OrderPosition>> getAllOrders() {
+        return ResponseEntity.ok(orders.findAll());
     }
 
-    public OrderPosition getOrderById(Long id) {
+    public ResponseEntity<OrderPosition> getOrderById(Long id) {
         if (orders.findById(id).isEmpty()) {
-            return new OrderPosition();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return orders.findById(id).get();
+        return new ResponseEntity<OrderPosition>(orders.findById(id).get(), HttpStatus.OK);
     }
 
-    public OrderPosition createOrder(OrderPosition orderPosition) {
-        return orders.save(orderPosition);
+    public ResponseEntity<OrderPosition> createOrder(OrderPosition orderPosition) {
+        return new ResponseEntity<>(orders.save(orderPosition), HttpStatus.OK);
     }
 
-    // todo: меняет id после изменения статуса
-    public String cancelOrder(Long id) {
+    public ResponseEntity<String> cancelOrder(Long id) {
         if (orders.findById(id).isEmpty()) {
-            return "There is no such order!";
+            return new ResponseEntity<>("Not found!", HttpStatus.NOT_FOUND);
         }
 
-        var order = orders.findById(id).get();
-        order.statusOrder = StatusOrder.CANCELLED;
-        orders.delete(orders.findById(id).get());
+        OrderPosition order = orders.findById(id).get();
+        order.setStatusOrder(StatusOrder.CANCELLED);
         orders.save(order);
-        return "Order status updated! The order " + order.id + " has now been cancelled.";
+        return new ResponseEntity<>("Good!", HttpStatus.OK);
     }
 
-    // todo: меняет id после изменения статуса
-    public String payOrder(Long id) {
+    public ResponseEntity<String> payOrder(Long id) {
         if (orders.findById(id).isEmpty()) {
-            return "There is no such order!";
+            return new ResponseEntity<>("Not found!", HttpStatus.NOT_FOUND);
         }
 
-        var order = orders.findById(id).get();
-        order.statusOrder = StatusOrder.PAYED;
-        order.id = orders.findById(id).get().getId();
-        orders.delete(orders.findById(id).get());
+        OrderPosition order = orders.findById(id).get();
+        order.setStatusOrder(StatusOrder.PAYED);
         orders.save(order);
-        return "Order status updated! The order " + order.id + " has now been payed.";
+        return new ResponseEntity<>("Good!", HttpStatus.OK);
     }
 }

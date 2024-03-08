@@ -1,14 +1,14 @@
 package com.example.restapsok.Service.Interface;
 
 import com.example.restapsok.Model.OrderPosition;
-import com.example.restapsok.Model.StatusOrder;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface OrderPositionService {
-    List<OrderPosition> getAllOrders();
-    OrderPosition getOrderById(Long id);
-    OrderPosition createOrder(OrderPosition orderPosition);
-    String cancelOrder(Long id);
-    String payOrder(Long id);
+    ResponseEntity<List<OrderPosition>> getAllOrders();
+    ResponseEntity<OrderPosition> getOrderById(Long id);
+    ResponseEntity<OrderPosition> createOrder(OrderPosition orderPosition);
+    ResponseEntity<String> cancelOrder(Long id);
+    ResponseEntity<String> payOrder(Long id);
 }

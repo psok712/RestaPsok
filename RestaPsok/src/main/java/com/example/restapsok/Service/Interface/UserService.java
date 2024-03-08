@@ -1,13 +1,15 @@
 package com.example.restapsok.Service.Interface;
 
 import com.example.restapsok.Model.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface UserService {
-    List<User> getAllUsers();
-    String deleteUser(Long id);
-    User updateUser(Long id, User user);
-    User createUser(User user);
-    User getUserById(Long id);
+    ResponseEntity<List<User>> getAllUsers();
+    HttpStatus deleteUser(Long id);
+    ResponseEntity<User> updateUser(Long id, User user);
+    ResponseEntity<User> createUser(User user);
+    ResponseEntity<User> getUserById(Long id);
 }

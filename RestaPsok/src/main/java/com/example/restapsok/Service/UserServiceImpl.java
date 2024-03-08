@@ -1,10 +1,11 @@
 package com.example.restapsok.Service;
 
-import com.example.restapsok.Exception.UserNotFoundException;
 import com.example.restapsok.Model.User;
 import com.example.restapsok.Repository.UserRepository;
 import com.example.restapsok.Service.Interface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,42 +20,41 @@ public class UserServiceImpl implements UserService {
         users = userRepository;
     }
 
-    public List<User> getAllUsers() {
-        return users.findAll();
+    public ResponseEntity<List<User>> getAllUsers() {
+        return new ResponseEntity<>(users.findAll(), HttpStatus.OK);
     }
 
-    public User getUserById(Long id) {
+    public ResponseEntity<User> getUserById(Long id) {
         if (users.findById(id).isEmpty()) {
-            return new User();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return users.findById(id).get();
+        return new ResponseEntity<>(users.findById(id).get(), HttpStatus.OK);
     }
 
-    public User updateUser(Long id, User user) {
+    public ResponseEntity<User> updateUser(Long id, User user) {
         if (users.findById(id).isEmpty()) {
-            return new User();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         User existingUser = users.findById(id).get();
         existingUser.setUsername(user.getUsername());
         existingUser.setPassword(user.getPassword());
         existingUser.setRole(user.getRole());
-        return users.save(existingUser);
+        return new ResponseEntity<>(users.save(existingUser), HttpStatus.OK);
     }
 
-    public User createUser(User user) {
-        return users.save(user);
+    public ResponseEntity<User> createUser(User user) {
+        return new ResponseEntity<>(users.save(user), HttpStatus.OK);
     }
 
 
-    public String deleteUser(Long id) {
+    public HttpStatus deleteUser(Long id) {
         if (users.findById(id).isEmpty()) {
-            return "User not found";
+            return HttpStatus.NOT_FOUND;
         }
 
-        String message = "User " + users.findById(id).get().getUsername() + " deleted successfully";
         users.deleteById(id);
-        return message;
+        return HttpStatus.OK;
     }
 }

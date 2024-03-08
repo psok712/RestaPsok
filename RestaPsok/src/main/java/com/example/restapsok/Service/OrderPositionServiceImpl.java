@@ -30,7 +30,7 @@ public class OrderPositionServiceImpl implements OrderPositionService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<OrderPosition>(orders.findById(id).get(), HttpStatus.OK);
+        return new ResponseEntity<>(orders.findById(id).get(), HttpStatus.OK);
     }
 
     public ResponseEntity<OrderPosition> createOrder(OrderPosition orderPosition) {

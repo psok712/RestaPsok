@@ -30,16 +30,4 @@ public class MenuItemServiceImpl implements MenuItemService {
         return new ResponseEntity<>(_menu.findById(id).get(), HttpStatus.OK);
     }
 
-    public ResponseEntity<MenuItem> createMenuItem(MenuItem menuItem) {
-        return new ResponseEntity<>(_menu.save(menuItem), HttpStatus.OK);
-    }
-
-    public ResponseEntity<String> deleteMenuItem(Long id) {
-        if (_menu.findById(id).isEmpty()) {
-            return new ResponseEntity<>("No such dish found!", HttpStatus.NOT_FOUND);
-        }
-
-        _menu.deleteById(id);
-        return new ResponseEntity<>("The dish was successfully deleted!", HttpStatus.OK);
-    }
 }

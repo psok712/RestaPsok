@@ -29,16 +29,4 @@ public class MenuItemControllerImpl implements MenuItemController {
         MenuItemService service = new MenuItemServiceImpl(menu);
         return service.getMenuItemById(id);
     }
-
-    @PostMapping
-    public ResponseEntity<MenuItem> createMenuItem(@RequestBody MenuItem menuItem) {
-        MenuItemService service = new MenuItemServiceImpl(menu);
-        return service.createMenuItem(menuItem);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteMenuItem(@PathVariable Long id) {
-        MenuItemService service = new MenuItemServiceImpl(menu);
-        return service.deleteMenuItem(id);
-    }
 }

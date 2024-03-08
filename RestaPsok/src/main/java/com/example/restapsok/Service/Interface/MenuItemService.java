@@ -8,6 +8,4 @@ import java.util.List;
 public interface MenuItemService {
     ResponseEntity<List<MenuItem>> getAllMenu();
     ResponseEntity<MenuItem> getMenuItemById(Long id);
-    ResponseEntity<MenuItem> createMenuItem(MenuItem menuItem);
-    ResponseEntity<String> deleteMenuItem(Long id);
 }

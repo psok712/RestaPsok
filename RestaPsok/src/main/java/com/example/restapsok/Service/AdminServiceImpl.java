@@ -2,8 +2,6 @@ package com.example.restapsok.Service;
 
 import com.example.restapsok.Model.MenuItem;
 import com.example.restapsok.Repository.MenuItemRepository;
-import com.example.restapsok.Repository.OrderPositionRepository;
-import com.example.restapsok.Repository.UserRepository;
 import com.example.restapsok.Service.Interface.AdminService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

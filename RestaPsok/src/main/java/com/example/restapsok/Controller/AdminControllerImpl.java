@@ -5,7 +5,7 @@ import com.example.restapsok.Model.MenuItem;
 import com.example.restapsok.Model.Role;
 import com.example.restapsok.Model.User;
 import com.example.restapsok.Repository.MenuItemRepository;
-import com.example.restapsok.Repository.OrderPositionRepository;
+import com.example.restapsok.Repository.ReviewRepository;
 import com.example.restapsok.Repository.UserRepository;
 import com.example.restapsok.Service.AdminServiceImpl;
 import com.example.restapsok.Service.Interface.AdminService;
@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@RequestMapping("api/{admin}/{password}")
+@RequestMapping("api/admin/{admin}&{password}")
 @RestController
 public class AdminControllerImpl implements AdminController {
 
@@ -24,15 +24,14 @@ public class AdminControllerImpl implements AdminController {
     @Autowired
     UserRepository users;
     @Autowired
-    OrderPositionRepository orders;
+    ReviewRepository reviews;
 
     @PostMapping
     public ResponseEntity<String> createMenuItem(
             @PathVariable String admin,
             @PathVariable String password,
             @RequestBody MenuItem menuItem
-    )
-    {
+    ) {
         if (!checkingDetailsAdmin(admin, password)) {
             return new ResponseEntity<>(
                     "You do not have sufficient rights to perform this action!",
@@ -40,7 +39,7 @@ public class AdminControllerImpl implements AdminController {
             );
         }
 
-        AdminService service = new AdminServiceImpl(menu);
+        AdminService service = new AdminServiceImpl(menu, reviews);
         return service.createMenuItem(menuItem);
     }
 
@@ -49,8 +48,7 @@ public class AdminControllerImpl implements AdminController {
             @PathVariable String admin,
             @PathVariable String password,
             @PathVariable Long id
-    )
-    {
+    ) {
         if (!checkingDetailsAdmin(admin, password)) {
             return new ResponseEntity<>(
                     "You do not have sufficient rights to perform this action!",
@@ -58,8 +56,24 @@ public class AdminControllerImpl implements AdminController {
             );
         }
 
-        AdminService service = new AdminServiceImpl(menu);
+        AdminService service = new AdminServiceImpl(menu, reviews);
         return service.deleteMenuItem(id);
+    }
+
+    @GetMapping("/stat")
+    public ResponseEntity<String> statisticsOrder(
+            @PathVariable String admin,
+            @PathVariable String password
+    ) {
+        if (!checkingDetailsAdmin(admin, password)) {
+            return new ResponseEntity<>(
+                    "You do not have sufficient rights to perform this action!",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        AdminService service = new AdminServiceImpl(menu, reviews);
+        return service.statisticsOrder();
     }
 
     private boolean checkingDetailsAdmin(String admin, String password)

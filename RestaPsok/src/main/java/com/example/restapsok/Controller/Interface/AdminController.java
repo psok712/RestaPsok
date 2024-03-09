@@ -6,4 +6,5 @@ import org.springframework.http.ResponseEntity;
 public interface AdminController {
     ResponseEntity<String> createMenuItem(String admin, String password, MenuItem user);
     ResponseEntity<String> deleteMenuItem(String admin, String password, Long id);
+    ResponseEntity<String> statisticsOrder(String admin, String password);
 }
